@@ -41,7 +41,7 @@ const AvailableMeals = () => {
   //   const fetchMeals = async () => {
   //     try {
   //       const response = await fetch(
-  //         "https://using-firebase-ac49a-default-rtdb.firebaseio.com/mels.jsn"
+  //         "https://using-firebase-ac49a-default-rtdb.firebaseio.com/meals.json"
   //       );
 
   //       if (!response.ok) {
@@ -70,10 +70,45 @@ const AvailableMeals = () => {
   //   fetchMeals();
   // }, []);
 
+  // useEffect(() => {
+  //   const fetchMeals = async () => {
+  //     const response = await fetch(
+  //       "https://using-firebase-ac49a-default-rtdb.firebaseio.com/meals.json"
+  //     );
+  //     if (!response.ok) {
+  //       throw new Error("Something went wrong");
+  //     }
+  //     const data = await response.json();
+  //     // console.log(data);
+  //     const loadedMeals = [];
+  //     for (const key in data) {
+  //       loadedMeals.push({
+  //         id: key,
+  //         name: data[key].name,
+  //         description: data[key].description,
+  //         price: data[key].price,
+  //       });
+  //     }
+  //     setMeals(loadedMeals);
+  //     setIsLoading(false);
+  //   };
+
+  //   const checkError = async () => {
+  //     try {
+  //       await fetchMeals();
+  //     } catch (error) {
+  //       setIsLoading(false);
+  //       setHttpError(error.message);
+  //     }
+  //   };
+
+  //   checkError();
+  // }, []);
+
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(
-        "https://using-firebase-ac49a-default-rtdb.firebaseio.com/meals.jon"
+        "https://using-firebase-ac49a-default-rtdb.firebaseio.com/meals.json"
       );
       if (!response.ok) {
         throw new Error("Something went wrong");
@@ -93,16 +128,10 @@ const AvailableMeals = () => {
       setIsLoading(false);
     };
 
-    const checkError = async () => {
-      try {
-        await fetchMeals();
-      } catch (error) {
-        setIsLoading(false);
-        setHttpError(error.message);
-      }
-    };
-
-    checkError();
+    fetchMeals().catch((error) => {
+      setIsLoading(false);
+      setHttpError(error.message);
+    });
   }, []);
 
   if (isLoading) {
